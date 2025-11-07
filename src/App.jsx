@@ -1,5 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { useState, useReducer } from "react";
+import Task from "./components/Task";
 
 // Your Vite environment variable
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -11,6 +12,10 @@ const taskSchema = {
   properties: {
     taskName: {
       description: "Task name",
+      type: "string",
+    },
+    taskDetails: {
+      description: "a short sentence explaining the task in more detail",
       type: "string",
     },
     taskStartTime: {
@@ -42,7 +47,7 @@ const plannerResponseSchema = {
 };
 
 const initialState = {
-  planner: {},
+  planner: [],
   isLoading: false,
   error: null,
 };
@@ -105,6 +110,7 @@ function App() {
 
   return (
     <div>
+      <h1>AI Productivity Planner</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -115,6 +121,18 @@ function App() {
           {isLoading ? "Loading..." : "Submit"}
         </button>
       </form>
+      {planner.length === 0 ? (
+        <div>Ask AI for a plan</div>
+      ) : (
+        planner.map((task) => (
+          <Task
+            taskName={task.taskName}
+            startTime={task.taskStartTime}
+            endTime={task.taskEndTime}
+            key={task.taskName}
+          />
+        ))
+      )}
     </div>
   );
 }
