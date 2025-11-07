@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { useState } from "react";
+import { useState, useReducer } from "react";
 
 // Your Vite environment variable
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -41,13 +41,41 @@ const plannerResponseSchema = {
   required: ["planner"],
 };
 
+const initialState = {
+  planner: {},
+  isLoading: false,
+  error: null,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "loading":
+      return { ...state, isLoading: true };
+    case "AI_response/loaded":
+      return {
+        ...state,
+        isLoading: false,
+        planner: action.payload,
+      };
+
+    default:
+      return state;
+  }
+}
+
 function App() {
   const [searchInput, setSearchInput] = useState("");
   const [searchReply, setSearchReply] = useState("");
+  const [{ planner, isLoading, error }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   // Handles the user submitting their question in the input box
   async function handleSubmit(e) {
     e.preventDefault();
+    // Set loading state while the AI thinks of a response
+    dispatch({ type: "loading" });
 
     // The client gets the API key from the environment variable `GEMINI_API_KEY`.
     const ai = new GoogleGenAI({ apiKey: API_KEY });
@@ -64,9 +92,11 @@ function App() {
       });
 
       // parses the string response from Gemini and constructs an object based on the data
-      const dataObject = JSON.parse(res.text);
+      const parsedResponse = JSON.parse(res.text);
+      const planner = parsedResponse.planner;
 
-      console.log(dataObject);
+      console.log(planner);
+      dispatch({ type: "AI_response/loaded", payload: planner });
     } catch (err) {
       // Catches any errors when fetching data from the API
       console.error("Error:", err);
@@ -81,7 +111,9 @@ function App() {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
-        <button type="submit"></button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Loading..." : "Submit"}
+        </button>
       </form>
     </div>
   );
