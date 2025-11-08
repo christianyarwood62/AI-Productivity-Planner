@@ -14,7 +14,7 @@ dist-ssr
 
 # APIs
 .env
-apikey.jsx
+apikey.js
 
 # Editor directories and files
 .vscode/*
