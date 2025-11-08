@@ -53,7 +53,7 @@ const plannerResponseSchema = {
 const initialState = {
   planner: [],
   isLoading: false,
-  error: "",
+  error: null,
 };
 
 function reducer(state, action) {
@@ -80,10 +80,10 @@ function App() {
     initialState
   );
 
-  useEffect(() => {
-    const planner = JSON.parse(localStorage.getItem("planner")) || [];
-    dispatch({ type: "AI_response/loaded", payload: planner });
-  }, []);
+  // useEffect(() => {
+  //   const planner = JSON.parse(localStorage.getItem("planner"));
+  //   dispatch({ type: "AI_response/loaded", payload: planner });
+  // }, []);
 
   // Handles the user submitting their question in the input box
   async function handleSubmit(e) {
@@ -123,11 +123,11 @@ function App() {
     <div className="page-content">
       <h1
         className="mb-4 text-4xl font-extrabold leading-none tracking-tight
-        text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+        text-gray-900 md:text-5xl lg:text-6xl"
       >
         AI Productivity App
       </h1>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+      <form onSubmit={handleSubmit} className="max-w-md mx-auto w-full">
         <label
           htmlFor="default-search"
           className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -137,7 +137,7 @@ function App() {
         <div className="relative">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg
-              className="w-4 h-4 text-gray-500 dark:text-gray-400"
+              className="w-4 h-4 text-gray-500"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -171,6 +171,16 @@ function App() {
           </button>
         </div>
       </form>
+      {/* <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Loading..." : "Submit"}
+        </button>
+      </form> */}
       {planner.length === 0 ? (
         <div>Ask AI for a plan</div>
       ) : (
