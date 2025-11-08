@@ -81,7 +81,7 @@ function App() {
   );
 
   useEffect(() => {
-    const planner = JSON.parse(localStorage.getItem("planner") || []);
+    const planner = JSON.parse(localStorage.getItem("planner")) || [];
     dispatch({ type: "AI_response/loaded", payload: planner });
   }, []);
 
