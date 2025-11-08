@@ -8,3 +8,9 @@
 .task-title-container {
   display: flex;
 }
+
+.task-icon {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
