@@ -1,17 +1,35 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
 
-function Task({ startTime, endTime, taskName }) {
+function Task({ startTime, endTime, taskName, taskDetails }) {
+  const [isTaskDetailsShowing, setIsTaskDetailsShowing] = useState(false);
+
+  function handleShowDetails() {
+    setIsTaskDetailsShowing(!isTaskDetailsShowing);
+  }
+
   return (
     <div className="task-container">
-      <div className="task-icon">icon</div>
-      <input type="checkbox" />
-      <div className="task-details">
-        <div>
-          {startTime} - {endTime}
+      <div className="task-title-container">
+        <div className="task-icon">icon</div>
+        <input type="checkbox" />
+        <div className="task-details">
+          <div>
+            {startTime} - {endTime}
+          </div>
+          <div>{taskName}</div>
         </div>
-        <div>{taskName}</div>
+        {isTaskDetailsShowing ? (
+          <ChevronUp onClick={handleShowDetails} />
+        ) : (
+          <ChevronDown onClick={handleShowDetails} />
+        )}
       </div>
-      <ChevronDown />
+      {isTaskDetailsShowing && (
+        <div>
+          <p>{taskDetails}</p>
+        </div>
+      )}
     </div>
   );
 }

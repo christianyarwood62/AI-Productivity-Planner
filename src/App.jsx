@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 import Task from "./components/Task";
 
 // Your Vite environment variable
@@ -71,10 +71,15 @@ function reducer(state, action) {
 function App() {
   const [searchInput, setSearchInput] = useState("");
   const [searchReply, setSearchReply] = useState("");
-  const [{ planner, isLoading, error }, dispatch] = useReducer(
+  const [{ planner, isLoading, error, taskDetails }, dispatch] = useReducer(
     reducer,
     initialState
   );
+
+  useEffect(() => {
+    const planner = JSON.parse(localStorage.getItem("planner"));
+    dispatch({ type: "AI_response/loaded", payload: planner });
+  }, []);
 
   // Handles the user submitting their question in the input box
   async function handleSubmit(e) {
@@ -102,6 +107,8 @@ function App() {
 
       console.log(planner);
       dispatch({ type: "AI_response/loaded", payload: planner });
+
+      localStorage.setItem("planner", JSON.stringify(planner));
     } catch (err) {
       // Catches any errors when fetching data from the API
       console.error("Error:", err);
@@ -130,6 +137,7 @@ function App() {
             startTime={task.taskStartTime}
             endTime={task.taskEndTime}
             key={task.taskName}
+            taskDetails={task.taskDetails}
           />
         ))
       )}
