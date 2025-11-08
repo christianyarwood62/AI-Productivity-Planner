@@ -175,7 +175,7 @@ function App() {
         <div>Ask AI for a plan</div>
       ) : (
         <div className="task-list-container">
-          {planner.map((task) => (
+          {planner?.map((task) => (
             <Task
               taskName={task.taskName}
               startTime={task.taskStartTime}
