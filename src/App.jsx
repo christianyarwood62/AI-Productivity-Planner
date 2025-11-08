@@ -1,7 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { useState, useReducer, useEffect } from "react";
 import Task from "./components/Task";
-import store from "../../react/redux-intro/src/store";
 
 // Your Vite environment variable
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -82,11 +81,8 @@ function App() {
   );
 
   useEffect(() => {
-    const storedPlanner = localStorage.getItem("planner");
-    dispatch({
-      type: "AI_response/loaded",
-      payload: storedPlanner ? JSON.parse(storedPlanner) : [],
-    });
+    const planner = JSON.parse(localStorage.getItem("planner") || []);
+    dispatch({ type: "AI_response/loaded", payload: planner });
   }, []);
 
   // Handles the user submitting their question in the input box
@@ -179,7 +175,7 @@ function App() {
         <div>Ask AI for a plan</div>
       ) : (
         <div className="task-list-container">
-          {planner?.map((task) => (
+          {planner.map((task) => (
             <Task
               taskName={task.taskName}
               startTime={task.taskStartTime}
