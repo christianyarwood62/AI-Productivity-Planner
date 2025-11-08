@@ -18,6 +18,10 @@ const taskSchema = {
       description: "a short sentence explaining the task in more detail",
       type: "string",
     },
+    taskIcon: {
+      description: "An icon that describes the task name, e.g. 🏃, ✂️, etc.",
+      type: "string",
+    },
     taskStartTime: {
       description: "The starting time of the task, in HH:MM format, 24 hours",
       type: "string",
@@ -29,7 +33,7 @@ const taskSchema = {
       pattern: "^([01]\\d|2[0-3]):([0-5]\\d)$",
     },
   },
-  required: ["taskName", "taskStartTime", "taskEndTime"],
+  required: ["taskName", "taskStartTime", "taskEndTime", "taskIcon"],
 };
 
 // A scheme for the AI to produce a planner object with the desired properties
@@ -138,6 +142,7 @@ function App() {
             endTime={task.taskEndTime}
             key={task.taskName}
             taskDetails={task.taskDetails}
+            taskIcon={task.taskIcon}
           />
         ))
       )}

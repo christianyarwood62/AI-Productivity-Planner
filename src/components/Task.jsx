@@ -1,7 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
-function Task({ startTime, endTime, taskName, taskDetails }) {
+function Task({ startTime, endTime, taskName, taskDetails, taskIcon }) {
   const [isTaskDetailsShowing, setIsTaskDetailsShowing] = useState(false);
 
   function handleShowDetails() {
@@ -11,7 +11,7 @@ function Task({ startTime, endTime, taskName, taskDetails }) {
   return (
     <div className="task-container">
       <div className="task-title-container">
-        <div className="task-icon">icon</div>
+        <div className="task-icon">{taskIcon}</div>
         <input type="checkbox" />
         <div className="task-details">
           <div>
