@@ -81,7 +81,7 @@ function App() {
   );
 
   useEffect(() => {
-    const planner = JSON.parse(localStorage.getItem("planner")) || [];
+    const planner = [];
     dispatch({ type: "AI_response/loaded", payload: planner });
   }, []);
 
@@ -96,13 +96,13 @@ function App() {
 
     // Generates a response from Gemini based on the search that the user has requested
     try {
-      const res = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: searchInput,
-        config: {
-          responseMimeType: "application/json",
-          responseJsonSchema: plannerResponseSchema,
-        },
+      const res = await fetch("http://localhost:5000/generate-plan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt: searchInput,
+          schema: plannerResponseSchema,
+        }),
       });
 
       // parses the string response from Gemini and constructs an object based on the data
