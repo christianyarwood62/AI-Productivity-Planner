@@ -135,16 +135,18 @@ function App() {
       {planner.length === 0 ? (
         <div>Ask AI for a plan</div>
       ) : (
-        planner.map((task) => (
-          <Task
-            taskName={task.taskName}
-            startTime={task.taskStartTime}
-            endTime={task.taskEndTime}
-            key={task.taskName}
-            taskDetails={task.taskDetails}
-            taskIcon={task.taskIcon}
-          />
-        ))
+        <div className="task-list-container">
+          {planner.map((task) => (
+            <Task
+              taskName={task.taskName}
+              startTime={task.taskStartTime}
+              endTime={task.taskEndTime}
+              key={task.taskName}
+              taskDetails={task.taskDetails}
+              taskIcon={task.taskIcon}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

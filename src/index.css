@@ -9,8 +9,18 @@
   display: flex;
 }
 
-.task-icon {
+.task-icon-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+.task-icon {
+  font-size: 32px;
+}
+
+.task-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

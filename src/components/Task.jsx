@@ -11,8 +11,8 @@ function Task({ startTime, endTime, taskName, taskDetails, taskIcon }) {
   return (
     <div className="task-container">
       <div className="task-title-container">
-        <div className="task-icon">
-          <span>{taskIcon}</span>
+        <div className="task-icon-container">
+          <div className="task-icon">{taskIcon}</div>
         </div>
         <input type="checkbox" />
         <div className="task-details">
