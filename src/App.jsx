@@ -171,21 +171,11 @@ function App() {
           </button>
         </div>
       </form>
-      {/* <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Submit"}
-        </button>
-      </form> */}
       {planner.length === 0 ? (
         <div>Ask AI for a plan</div>
       ) : (
         <div className="task-list-container">
-          {planner.map((task) => (
+          {planner?.map((task) => (
             <Task
               taskName={task.taskName}
               startTime={task.taskStartTime}
