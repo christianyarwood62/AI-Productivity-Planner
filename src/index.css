@@ -24,3 +24,12 @@
   flex-direction: column;
   gap: 8px;
 }
+
+.task-details-container {
+  display: flex;
+  width: 100%;
+}
+
+.chevron {
+  margin-left: auto;
+}

@@ -14,24 +14,26 @@ function Task({ startTime, endTime, taskName, taskDetails, taskIcon }) {
         <div className="task-icon-container">
           <div className="task-icon">{taskIcon}</div>
         </div>
-        <input type="checkbox" />
-        <div className="task-details">
-          <div>
-            {startTime} - {endTime}
+        <div className="task-details-container">
+          <input type="checkbox" />
+          <div className="task-details">
+            <div>
+              {startTime} - {endTime}
+            </div>
+            <div>{taskName}</div>
           </div>
-          <div>{taskName}</div>
+          {isTaskDetailsShowing ? (
+            <ChevronUp className="chevron" onClick={handleShowDetails} />
+          ) : (
+            <ChevronDown className="chevron" onClick={handleShowDetails} />
+          )}
         </div>
-        {isTaskDetailsShowing ? (
-          <ChevronUp onClick={handleShowDetails} />
-        ) : (
-          <ChevronDown onClick={handleShowDetails} />
+        {isTaskDetailsShowing && (
+          <div>
+            <p>{taskDetails}</p>
+          </div>
         )}
       </div>
-      {isTaskDetailsShowing && (
-        <div>
-          <p>{taskDetails}</p>
-        </div>
-      )}
     </div>
   );
 }
